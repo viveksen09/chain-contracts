@@ -1,4 +1,4 @@
-Hackday project
+Learning project
 ---------------
 
 
