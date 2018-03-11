@@ -8,7 +8,7 @@ const coin = require('../model/coin.js');
 const common = require('../common/common.js');
 const API_PATH = 'http://localhost:9984/api/v1/';
 const conn = new driver.Connection(API_PATH);
-var contractTypes = require('../schema/contractTypes.js');
+var contractTypes = require('../schema/ContractTypes.js');
 
 var Schema = mongoose.Schema;
 
