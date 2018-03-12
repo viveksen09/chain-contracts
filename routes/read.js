@@ -45,6 +45,7 @@ router.get('/', function(req, res, next) {
 router.get('/test', function(req, res, next) {
   var item = common.buildAsset("coffe nugs", 10, "10 pesos");
   res.send(item.purchaseOrder.item);
+  console.log(__dirname);
 });
 
 module.exports = router;

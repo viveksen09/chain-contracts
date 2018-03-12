@@ -103,7 +103,7 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
   mode: 'text',
   pythonPath: '/usr/bin/python',
   pythonOptions: ['-u'], // get print results in real-time
-  scriptPath: '../scripts/',
+  scriptPath: '__dirname/../scripts/',
   args: [assetId, acceptor_pub_key, originator_priv_key]
 };
 PythonShell.run('transferContract.py', options, function (err, results) {
