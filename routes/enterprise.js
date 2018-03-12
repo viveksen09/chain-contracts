@@ -76,15 +76,21 @@ router.post('/contract/accept', function(req, res, next) {
   const metadata = common.getMetadata();
   const acc_keys = common.getDemoKeys(accepteduser);
   const org_keys = common.getDemoKeys(originaluser);
-  var transactionId = callPythonToTransferTransaction(assetId, acc_keys.pub_key, org_keys.prv_key);
-  console.log(transactionId);
-  var i = 0;
-  while (i < 150 || g_TransferId !== 'empty' ) {
-    i++;
-  }
+//  var transactionId = callPythonToTransferTransaction(assetId, acc_keys.pub_key, org_keys.prv_key);
+  var result;
+  var options = {
+  mode: 'text',
+  pythonPath: '/usr/bin/python3',
+  pythonOptions: ['-u'], // get print results in real-time
+  scriptPath: '__dirname/../scripts/',
+  args: [assetId, acc_keys.pub_key, org_keys.prv_key]
+  };
+  PythonShell.run('transferContract.py', options, function (err, results) {
+  if (err) throw err;
+  g_TransferId = results[0];
   console.log(g_TransferId);
-  //writeFulfiledTransactionToDB();
-  res.status(200).send();
+  res.status(200).send(g_TransferId);
+  });
 });
 
 function writeToDB(username, transactionId) {
@@ -115,7 +121,6 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
   };
   PythonShell.run('transferContract.py', options, function (err, results) {
   if (err) throw err;
-  console.log('results: %j', results);
   g_TransferId = results[0];
   console.log(g_TransferId);
 });
