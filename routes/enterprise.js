@@ -108,7 +108,7 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
   scriptPath: '__dirname/../scripts/',
   args: [assetId, acceptor_pub_key, originator_priv_key]
   };
-  const promise = PythonShell.run('transferContract.py', options, function (err, results) {
+  var promise = PythonShell.run('transferContract.py', options, function (err, results) => {
   if (err) throw err;
   result = results[0];
   console.log("1: " + result);
