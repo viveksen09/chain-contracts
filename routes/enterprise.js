@@ -111,6 +111,7 @@ PythonShell.run('transferContract.py', options, function (err, results) {
   // results is an array consisting of messages collected during execution
   console.log('results: %j', results);
   result = results;
+  return results;
 });
   return result;
 }
