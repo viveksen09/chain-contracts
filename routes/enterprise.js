@@ -74,10 +74,10 @@ router.post('/contract/accept', function(req, res, next) {
   const metadata = common.getMetadata();
   const acc_keys = common.getDemoKeys(accepteduser);
   const org_keys = common.getDemoKeys(originaluser);
-  var transactionId = callPythonToTransferTransaction1(assetId, acc_keys.pub_key, org_keys.prv_key);
+  var transactionId = callPythonToTransferTransaction(assetId, acc_keys.pub_key, org_keys.prv_key);
   console.log(transactionId);
   //writeFulfiledTransactionToDB();
-  //res.send(transactionId);
+  res.status(200).send(transactionId);
 });
 
 function writeToDB(username, transactionId) {
@@ -109,7 +109,8 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
 PythonShell.run('transferContract.py', options, function (err, results) {
   if (err) throw err;
   // results is an array consisting of messages collected during execution
-  console.log('results: %j', results);
+  //console.log('results: %j', results);
+  console.log(results);
   result = results;
   return results;
 });
