@@ -101,6 +101,7 @@ function writeFulfiledTransactionToDB(originaluser, accepteduser, transactionId)
 
 function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_priv_key) {
   var result;
+  var promises = []
   var options = {
   mode: 'text',
   pythonPath: '/usr/bin/python3',
@@ -108,13 +109,14 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
   scriptPath: '__dirname/../scripts/',
   args: [assetId, acceptor_pub_key, originator_priv_key]
   };
-  var promise = PythonShell.run('transferContract.py', options, function (err, results) => {
+   promises.push(PythonShell.run('transferContract.py', options, function (err, results) {
   if (err) throw err;
   result = results[0];
   console.log("1: " + result);
-});
-promise.resolve().then(() => {
+})).then(() => {
+  promise.resolve().then(() => {
   console.log("2: " + result);
+});
   return result;
 });
 }
