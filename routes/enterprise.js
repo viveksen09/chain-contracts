@@ -32,7 +32,7 @@ router.post('/create', function(req, res, next) {
 });
 
 function writeToDB(username, transactionId) {
-var contract = new createTransactions();
+var contract = new createdContracts();
   common.getMongoConnection();
   contract.username = username;
   contract.assetId = transactionId;
