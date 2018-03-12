@@ -1,7 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var router = express.Router();
-var User = require('../schema/User.js');
+var User = require('../schema/user.js');
 const common = require('../common/common.js');
 
 router.post('/login', function(req, res, next) {
@@ -15,7 +15,7 @@ router.post('/login', function(req, res, next) {
     if(!user) {
       return res.status(404).send();
     }
-    return res.status(200).send();
+    return res.status(200).send(user.type);
   });
 });
 
