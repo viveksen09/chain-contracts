@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var cContracts = new Schema({
   username: String,
-  assetId: String,
+  assetId: {type: String, unique: true},
   intent: String
 });
 

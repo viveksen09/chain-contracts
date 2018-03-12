@@ -7,21 +7,21 @@ const common = require('../common/common.js');
 var createdContracts = mongoose.model('createdcontracts', cContracts);
 
 router.post('/create', function(req, res, next) {
-  const keys = common.getKeys();
   var item = req.body.item;
   var qty = req.body.qty;
   var value = req.body.value;
   var username = req.body.username;
   const metadata = common.getMetadata();
+  const keys = common.getDemoKeys(username);
   const txCreateEnterpriseSimple = driver.Transaction.makeCreateTransaction(
         asset,
         metadata,
         [ driver.Transaction.makeOutput(
-                driver.Transaction.makeEd25519Condition(keys.b_pbub_key))
+                driver.Transaction.makeEd25519Condition(keys.pub_key))
         ],
-        keys.b_pbub_key
+        keys.pub_key
       );
-      const txCreateEnterpriseSimpleSigned = driver.Transaction.signTransaction(txCreateAliceSimple, keys.b_pbub_key);
+      const txCreateEnterpriseSimpleSigned = driver.Transaction.signTransaction(txCreateAliceSimple, keys.prv_key);
       conn.postTransaction(txCreateEnterpriseSimpleSigned);
       var transactionId = txCreateEnterpriseSimpleSigned.id;
       writeToDB(username, transactionId);

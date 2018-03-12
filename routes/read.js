@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+const common = require('../common/common.js');
 //var contractTypes = require('../schema/contractTypes.js');
 
 var mySchema = mongoose.Schema({
@@ -37,8 +38,13 @@ router.get('/', function(req, res, next) {
   mongoose.model('createTransaction').find(function(err, txn) {
     res.send(txn);
   });
+});
 
 
+
+router.get('/test', function(req, res, next) {
+  var item = common.getDemoKeys("Hakinnen");
+  res.send(item.prv_key);
 });
 
 module.exports = router;
