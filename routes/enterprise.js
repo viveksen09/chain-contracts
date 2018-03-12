@@ -3,6 +3,7 @@ var driver = require('bigchaindb-driver');
 var mongoose = require('mongoose');
 var PythonShell = require('python-shell');
 var Promises = require('promise');
+const execSync = require('child_process').execSync;
 var router = express.Router();
 
 const API_PATH = 'http://localhost:9984/api/v1/';
@@ -100,7 +101,6 @@ function writeFulfiledTransactionToDB(originaluser, accepteduser, transactionId)
 
 function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_priv_key) {
   var result;
-  promises = [];
   var options = {
   mode: 'text',
   pythonPath: '/usr/bin/python3',
@@ -108,14 +108,12 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
   scriptPath: '__dirname/../scripts/',
   args: [assetId, acceptor_pub_key, originator_priv_key]
   };
-  promises.push(PythonShell.run('transferContract.py', options, function (err, results) {
+  execSync(PythonShell.run('transferContract.py', options, function (err, results) {
   if (err) throw err;
   result = results[0];
   console.log("1: " + result);
-  }));
-  Promise.all(promises).then(() => {
+}));
   console.log("2: " + result);
-});
   return result;
 }
 
