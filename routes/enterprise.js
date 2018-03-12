@@ -22,7 +22,7 @@ router.post('/create', function(req, res, next) {
         ],
         keys.pub_key
       );
-      const txCreateEnterpriseSimpleSigned = driver.Transaction.signTransaction(txCreateAliceSimple, keys.prv_key);
+      const txCreateEnterpriseSimpleSigned = driver.Transaction.signTransaction(txCreateEnterpriseSimple, keys.prv_key);
       conn.postTransaction(txCreateEnterpriseSimpleSigned);
       var transactionId = txCreateEnterpriseSimpleSigned.id;
       writeToDB(username, transactionId);
