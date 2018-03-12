@@ -10,6 +10,7 @@
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
+    "execSync": "^1.0.2",
     "express": "~4.15.5",
     "hjs": "~0.0.6",
     "less-middleware": "~2.2.1",
