@@ -5,6 +5,7 @@ var PythonShell = require('python-shell');
 var Promises = require('promise');
 var router = express.Router();
 
+var g_TransferId = '';
 const API_PATH = 'http://localhost:9984/api/v1/';
 const conn = new driver.Connection(API_PATH);
 const common = require('../common/common.js');
@@ -110,27 +111,8 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
   PythonShell.run('transferContract.py', options, function (err, results) {
   if (err) throw err;
   console.log('results: %j', results);
+  g_TransferId = results[0];
 });
-  console.log("2: " + result);
-  return result;
-}
-
-function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_priv_key) {
-  var result;
-  var options = {
-  mode: 'text',
-  pythonPath: '/usr/bin/python3',
-  pythonOptions: ['-u'], // get print results in real-time
-  scriptPath: '__dirname/../scripts/',
-  args: [assetId, acceptor_pub_key, originator_priv_key]
-  };
-  const promise = PythonShell.run('transferContract.py', options);
-  promise.then(function (err,results) {
-    console.log("2: " + result);
-    return result;
-  });
-  //console.log("2: " + result);
-  //return result;
 }
 
 
