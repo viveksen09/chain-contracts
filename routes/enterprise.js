@@ -121,6 +121,7 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
 
 function callPythonToTransferTransaction2(assetId, acceptor_pub_key, originator_priv_key) {
   var result;
+  promisess = [];
   var options = {
   mode: 'text',
   pythonPath: '/usr/bin/python3',
@@ -133,8 +134,9 @@ function callPythonToTransferTransaction2(assetId, acceptor_pub_key, originator_
   result = results[0];
   console.log("1: " + result);
 }));
-  Promise.all(promises).then(() => {
-  console.log("2: " + result);
+promisess.push(promise);
+  Promise.all(promisess).then(() => {
+  console.log("2: " + result); 
 });
   return result;
 }
