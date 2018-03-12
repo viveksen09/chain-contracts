@@ -125,12 +125,10 @@ function callPythonToTransferTransaction1(assetId, acceptor_pub_key, originator_
   scriptPath: '__dirname/../scripts/',
   args: [assetId, acceptor_pub_key, originator_priv_key]
   };
-  PythonShell.run('transferContract.py', options).then(function (err, results) {
+  child_process.execSync(PythonShell.run('transferContract.py', options, function (err, results) {
   if (err) throw err;
   console.log('results: %j', results);
-  result = results[0];
-  return result;
-});
+}));
   console.log("2: " + result);
   return result;
 }
