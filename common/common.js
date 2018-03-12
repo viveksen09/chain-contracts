@@ -16,16 +16,16 @@ const createdKeys = {
 
 const demoKeys = {
   'bux': {
-    'pub_key': 'EeHiD5rQgwJhzvMpRjZwqKYzZLy4ACC6W4tFfhWPyP27',
-    'prv_key': '31mWGkPAEW9cvCriZM2QKHzht5XxhPmnDux4np2NaVdS'
+    'pub_key': '4aAyvgT5VzTW13ZbHMcQsoAYzQCLSJvT6iu2ZtJUbcRe',
+    'prv_key': 'Dgo4iGM7hXvqzdutoqpyYXneWA8sV3mhSFSBjq1Qy6rU'
   },
   'wad': {
-    'pub_key': 'FPZVNJSjhKzG38s2sjxSudRNkB7ANuBqk1TUecCJPvja',
-    'prv_key': 'AW62KGWcgUZAHEp3dvUgazeDu7dBKK8Hx9iGt1LXxvfU'
+    'pub_key': '2Nbiu4AsgC3JS9jEqPqxZ1HesTxNYUbQqtoKEFnCwso9',
+    'prv_key': '5WELrtfyDdJNTFbTmwLBcMXgUuRvaE54qhGYDYbCjXxp'
   },
   'hak': {
-    'pub_key': '8GdofCc4to7woXiyjH2uUgfhK2pzYucpS6RPdM6SAQbv',
-    'prv_key': 'Fpgf3cSLXLhUHWKAiNNNeyxxaFbZXddnRW6FZyitBFr4'
+    'pub_key': '8jsN52pVGU8394QMGYTzYBovXvZALi5Woy84SiKbwT7g',
+    'prv_key': '7C47BEPZG2gjj3h6VED5acMF8XksnmAWrWwWoDTdcam6'
   }
 }
 

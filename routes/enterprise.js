@@ -1,6 +1,7 @@
 var express = require('express');
 var driver = require('bigchaindb-driver');
 var mongoose = require('mongoose');
+var PythonShell = require('python-shell');
 var router = express.Router();
 
 const API_PATH = 'http://localhost:9984/api/v1/';
@@ -44,7 +45,7 @@ router.get('/contracts/status/:txid', function(req, res, next) {
   res.send(status);
 });
 
-router.post('/contract/accept', function(req, res, next) {
+router.post('/contract/accepting', function(req, res, next) {
   var assetId = req.body.txid;
   var accepteduser = req.body.accepteduser;
   var originaluser = req.body.originaluser;
@@ -66,6 +67,17 @@ router.post('/contract/accept', function(req, res, next) {
       res.send(transactionId);
 });
 
+router.post('/contract/accept', function(req, res, next) {
+  var assetId = req.body.txid;
+  var accepteduser = req.body.accepteduser;
+  var originaluser = req.body.originaluser;
+  const metadata = common.getMetadata();
+  const acc_keys = common.getDemoKeys(accepteduser);
+  const org_keys = common.getDemoKeys(originaluser);
+  callPythonToTransferTransaction(assetId, acc_keys.pub_key, org_keys.prv_key)
+
+});
+
 function writeToDB(username, transactionId) {
 var contract = new createdContracts();
   common.getMongoConnection();
@@ -81,6 +93,24 @@ function writeFulfiledTransactionToDB(originaluser, accepteduser, transactionId)
   fcontract.acceptor = accepteduser;
   fcontract.assetId = transactionId;
   contract.save();
+}
+
+function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_priv_key) {
+  var result;
+  var options = {
+  mode: 'text',
+  pythonPath: '/usr/bin/python',
+  pythonOptions: ['-u'], // get print results in real-time
+  scriptPath: '../scripts/',
+  args: [assetId, acceptor_pub_key, originator_priv_key]
+};
+PythonShell.run('transferContract.py', options, function (err, results) {
+  if (err) throw err;
+  // results is an array consisting of messages collected during execution
+  console.log('results: %j', results);
+  result = results;
+});
+  return result;
 }
 
 module.exports = router;
