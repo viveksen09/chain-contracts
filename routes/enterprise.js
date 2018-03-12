@@ -118,7 +118,7 @@ PythonShell.run('transferContract.py', options, function (err, results) {
 
 
 function callPythonToTransferTransaction1(assetId, acceptor_pub_key, originator_priv_key) {
-  var pyshell = new PythonShell('my_script.py');
+  var pyshell = new PythonShell('__dirname/../scripts/my_script.py');
   pyshell.send(assetId, acceptor_pub_key, originator_priv_key);
 
   pyshell.on('message', function (message) {
