@@ -2,6 +2,7 @@ var express = require('express');
 var driver = require('bigchaindb-driver');
 var mongoose = require('mongoose');
 var PythonShell = require('python-shell');
+var Promises = require('promise');
 var router = express.Router();
 
 const API_PATH = 'http://localhost:9984/api/v1/';
@@ -120,7 +121,6 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
 
 function callPythonToTransferTransaction2(assetId, acceptor_pub_key, originator_priv_key) {
   var result;
-  promises = [];
   var options = {
   mode: 'text',
   pythonPath: '/usr/bin/python3',
@@ -128,35 +128,16 @@ function callPythonToTransferTransaction2(assetId, acceptor_pub_key, originator_
   scriptPath: '__dirname/../scripts/',
   args: [assetId, acceptor_pub_key, originator_priv_key]
   };
-  promises.push(PythonShell.run('transferContract.py', options, function (err, results) {
+  var promise = new Promises(PythonShell.run('transferContract.py', options, function (err, results) {
   if (err) throw err;
   result = results[0];
   console.log("1: " + result);
-}).then(() => {
-  console.log("3: " + result);
-}
-));
+}));
   Promise.all(promises).then(() => {
   console.log("2: " + result);
 });
   return result;
 }
 
-
-function callPythonToTransferTransaction1(assetId, acceptor_pub_key, originator_priv_key) {
-  var pyshell = new PythonShell('../scripts/transferContract.py');
-  pyshell.send(assetId, acceptor_pub_key, originator_priv_key);
-
-  pyshell.on('message', function (message) {
-  console.log(message);
-  });
-
-  pyshell.end(function (err,code,signal) {
-  if (err) throw err;
-  console.log('The exit code was: ' + code);
-  console.log('The exit signal was: ' + signal);
-  console.log('finished');
-});
-}
 
 module.exports = router;
