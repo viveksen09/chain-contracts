@@ -13,6 +13,7 @@ router.post('/create', function(req, res, next) {
   var username = req.body.username;
   const metadata = common.getMetadata();
   const keys = common.getDemoKeys(username);
+  const asset = common.buildAsset(item, qty, value);
   const txCreateEnterpriseSimple = driver.Transaction.makeCreateTransaction(
         asset,
         metadata,

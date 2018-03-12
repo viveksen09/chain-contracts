@@ -43,8 +43,8 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/test', function(req, res, next) {
-  var item = common.getDemoKeys("Hakinnen");
-  res.send(item.prv_key);
+  var item = common.buildAsset("coffe nugs", 10, "10 pesos");
+  res.send(item.purchaseOrder.item);
 });
 
 module.exports = router;

@@ -5,6 +5,7 @@ const API_PATH = 'http://localhost:9984/api/v1/';
 const conn = new driver.Connection(API_PATH);
 const mongoConnection = mongoose.connect('mongodb://localhost/vivekdb');
 const metadata = {'type': 'contract'};
+const contract = require('../model/contract.js');
 
 const createdKeys = {
   'a_pbub_key': 'Cs7iYv2dsnXaw3j5wpfbuv67DL9uvJtzY1sVkMuAKq6h',
@@ -55,6 +56,17 @@ const Common = {
         keys = demoKeys.bux;
     }
     return keys;
+  },
+
+  buildAsset: (item, qty, value) => {
+    const asset = {
+      'purchaseOrder': {
+              'item': `${item}`,
+              'qty': `${qty}`,
+              'value': `${value}`
+      }
+    }
+    return asset;
   },
 
   getMetadata: () => {
