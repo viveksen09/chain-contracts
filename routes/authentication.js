@@ -13,6 +13,7 @@ router.post('/login', function(req, res, next) {
       return res.status(500).send();
     }
     if(!user) {
+      console.log(user);
       return res.status(404).send();
     }
     return res.status(200).send(user.type);

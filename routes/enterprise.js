@@ -7,6 +7,7 @@ const API_PATH = 'http://localhost:9984/api/v1/';
 const conn = new driver.Connection(API_PATH);
 const common = require('../common/common.js');
 var createdContracts = require('../schema/createdcontracts.js');
+var fulfilledContracts = require('../schema/fulfilledcontracts.js');
 
 router.post('/create', function(req, res, next) {
   var item = req.body.item;
@@ -37,11 +38,46 @@ router.get('/contracts/:username', function(req, res, next) {
   });
 });
 
+router.get('/contracts/status/:txid', function(req, res, next) {
+  var status = conn.getStatus(req.params.txid);
+  res.send(status);
+});
+
+router.post('/contract/accept', function(req, res, next) {
+  var assetId = req.body.txid;
+  var accepteduser = req.body.accepteduser;
+  var originaluser = req.body.originaluser;
+  const metadata = common.getMetadata();
+  const acc_keys = common.getDemoKeys(accepteduser);
+  const org_keys = common.getDemoKeys(originaluser);
+  const txCreateEnterpriseSimpleSigned = conn.getTransaction(assetId);
+  const txTransferSupplier = driver.Transaction.makeTransferTransaction(
+        // signedTx to transfer and output index
+        [{ tx: txCreateEnterpriseSimpleSigned, output_index: 15 }],
+        [driver.Transaction.makeOutput(driver.Transaction.makeEd25519Condition(acc_keys.pub_key))],
+        metadata
+      );
+      const txTransferSupplierSigned = driver.Transaction.signTransaction(txTransferSupplier, org_keys.prv_key);
+      conn.postTransaction(txTransferSupplierSigned);
+      var transactionId = txTransferSupplierSigned.id;
+      writeFulfiledTransactionToDB();
+      res.send(transactionId);
+});
+
 function writeToDB(username, transactionId) {
 var contract = new createdContracts();
   common.getMongoConnection();
   contract.username = username;
   contract.assetId = transactionId;
+  contract.save();
+}
+
+function writeFulfiledTransactionToDB(originaluser, accepteduser, transactionId) {
+  var fcontract = new fulfilledContracts();
+  common.getMongoConnection();
+  fcontract.initiator = originaluser;
+  fcontract.acceptor = accepteduser;
+  fcontract.assetId = transactionId;
   contract.save();
 }
 
