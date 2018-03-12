@@ -114,7 +114,7 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
   }));
   Promise.all(promises).then(() => {
   console.log("2: " + result);
-  }
+});
   return result;
 }
 
