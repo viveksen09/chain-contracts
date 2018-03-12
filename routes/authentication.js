@@ -22,8 +22,8 @@ router.post('/login', function(req, res, next) {
 router.post('/register', function(req, res, next) {
   var username = req.body.username;
   var password = req.body.password;
-  var firstname = req.body.password;
-  var lastname = req.body.password;
+  var firstname = req.body.firstname;
+  var lastname = req.body.lastname;
   var type = req.body.type;
 
   var newUser = new User();
