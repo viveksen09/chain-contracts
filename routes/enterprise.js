@@ -28,7 +28,7 @@ router.post('/create', function(req, res, next) {
       conn.postTransaction(txCreateEnterpriseSimpleSigned);
       var transactionId = txCreateEnterpriseSimpleSigned.id;
       writeToDB(username, transactionId);
-      res.send('Contract id : ' + transactionId);
+      res.send(transactionId);
 });
 
 function writeToDB(username, transactionId) {
