@@ -31,6 +31,12 @@ router.post('/create', function(req, res, next) {
       res.send(transactionId);
 });
 
+router.get('/contracts/:username', function(req, res, next) {
+  createdContracts.find({username: req.params.username}, function (err, results) {
+    res.send(results);
+  });
+});
+
 function writeToDB(username, transactionId) {
 var contract = new createdContracts();
   common.getMongoConnection();
