@@ -108,8 +108,7 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
 };
 PythonShell.run('transferContract.py', options, function (err, results) {
   if (err) throw err;
-  //console.log(results[0]);
-  result = result[0];
+  result = results[0];
 });
   return result;
 }
