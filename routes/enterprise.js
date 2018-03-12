@@ -74,8 +74,10 @@ router.post('/contract/accept', function(req, res, next) {
   const metadata = common.getMetadata();
   const acc_keys = common.getDemoKeys(accepteduser);
   const org_keys = common.getDemoKeys(originaluser);
-  callPythonToTransferTransaction(assetId, acc_keys.pub_key, org_keys.prv_key)
-
+  var transactionId = callPythonToTransferTransaction(assetId, acc_keys.pub_key, org_keys.prv_key);
+  console.log(transactionId);
+  //writeFulfiledTransactionToDB();
+  //res.send(transactionId);
 });
 
 function writeToDB(username, transactionId) {
