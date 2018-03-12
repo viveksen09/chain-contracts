@@ -27,6 +27,7 @@ router.post('/create', function(req, res, next) {
       );
       const txCreateEnterpriseSimpleSigned = driver.Transaction.signTransaction(txCreateEnterpriseSimple, keys.prv_key);
       conn.postTransaction(txCreateEnterpriseSimpleSigned);
+      console.log(txCreateEnterpriseSimpleSigned);
       var transactionId = txCreateEnterpriseSimpleSigned.id;
       writeToDB(username, transactionId);
       res.send(transactionId);
