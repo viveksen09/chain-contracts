@@ -79,7 +79,7 @@ router.post('/contract/accept', function(req, res, next) {
   var transactionId = callPythonToTransferTransaction(assetId, acc_keys.pub_key, org_keys.prv_key);
   console.log(transactionId);
   //writeFulfiledTransactionToDB();
-  res.status(200).send(transactionId);
+  res.status(200).send();
 });
 
 function writeToDB(username, transactionId) {
@@ -114,11 +114,9 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
   result = results[0];
   console.log("1: " + result);
 })).then(() => {
-  promise.resolve().then(() => {
   console.log("2: " + result);
 });
   return result;
-});
 }
 
 function callPythonToTransferTransaction2(assetId, acceptor_pub_key, originator_priv_key) {
