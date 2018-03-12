@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var router = express.Router();
 
 const common = require('../common/common.js');
-var createdContracts = mongoose.model('createdcontracts', cContracts);
+var createdContracts = require('../schema/createdcontracts.js');
 
 router.post('/create', function(req, res, next) {
   var item = req.body.item;
