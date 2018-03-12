@@ -74,7 +74,7 @@ router.post('/contract/accept', function(req, res, next) {
   const metadata = common.getMetadata();
   const acc_keys = common.getDemoKeys(accepteduser);
   const org_keys = common.getDemoKeys(originaluser);
-  var transactionId = callPythonToTransferTransaction(assetId, acc_keys.pub_key, org_keys.prv_key);
+  var transactionId = callPythonToTransferTransaction1(assetId, acc_keys.pub_key, org_keys.prv_key);
   console.log(transactionId);
   //writeFulfiledTransactionToDB();
   //res.send(transactionId);
@@ -114,6 +114,23 @@ PythonShell.run('transferContract.py', options, function (err, results) {
   return results;
 });
   return result;
+}
+
+
+function callPythonToTransferTransaction1(assetId, acceptor_pub_key, originator_priv_key) {
+  var pyshell = new PythonShell('my_script.py');
+  pyshell.send(assetId, acceptor_pub_key, originator_priv_key);
+
+  pyshell.on('message', function (message) {
+  console.log(message);
+  });
+
+  pyshell.end(function (err,code,signal) {
+  if (err) throw err;
+  console.log('The exit code was: ' + code);
+  console.log('The exit signal was: ' + signal);
+  console.log('finished');
+});
 }
 
 module.exports = router;
