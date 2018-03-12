@@ -135,8 +135,7 @@ function callPythonToTransferTransaction2(assetId, acceptor_pub_key, originator_
 }).then(() => {
   console.log("3: " + result);
 }
-
-);
+));
   Promise.all(promises).then(() => {
   console.log("2: " + result);
 });
