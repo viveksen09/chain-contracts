@@ -5,7 +5,7 @@ var PythonShell = require('python-shell');
 var Promises = require('promise');
 var router = express.Router();
 
-var g_TransferId = '';
+var g_TransferId = 'empty';
 const API_PATH = 'http://localhost:9984/api/v1/';
 const conn = new driver.Connection(API_PATH);
 const common = require('../common/common.js');
@@ -78,6 +78,11 @@ router.post('/contract/accept', function(req, res, next) {
   const org_keys = common.getDemoKeys(originaluser);
   var transactionId = callPythonToTransferTransaction(assetId, acc_keys.pub_key, org_keys.prv_key);
   console.log(transactionId);
+  var i = 0;
+  while (i < 150 || g_TransferId !== 'empty' ) {
+    i++;
+  }
+  console.log(g_TransferId);
   //writeFulfiledTransactionToDB();
   res.status(200).send();
 });
@@ -112,6 +117,7 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
   if (err) throw err;
   console.log('results: %j', results);
   g_TransferId = results[0];
+  console.log(g_TransferId);
 });
 }
 
