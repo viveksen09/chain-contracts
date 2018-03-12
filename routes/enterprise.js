@@ -118,6 +118,31 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
   return result;
 }
 
+function callPythonToTransferTransaction2(assetId, acceptor_pub_key, originator_priv_key) {
+  var result;
+  promises = [];
+  var options = {
+  mode: 'text',
+  pythonPath: '/usr/bin/python3',
+  pythonOptions: ['-u'], // get print results in real-time
+  scriptPath: '__dirname/../scripts/',
+  args: [assetId, acceptor_pub_key, originator_priv_key]
+  };
+  promises.push(PythonShell.run('transferContract.py', options, function (err, results) {
+  if (err) throw err;
+  result = results[0];
+  console.log("1: " + result);
+}).then(() => {
+  console.log("3: " + result);
+}
+
+);
+  Promise.all(promises).then(() => {
+  console.log("2: " + result);
+});
+  return result;
+}
+
 
 function callPythonToTransferTransaction1(assetId, acceptor_pub_key, originator_priv_key) {
   var pyshell = new PythonShell('../scripts/transferContract.py');
