@@ -115,7 +115,6 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
   console.log("1: " + result);
 });
   console.log("2: " + result);
-});
   return result;
 }
 
