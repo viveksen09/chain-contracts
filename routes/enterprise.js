@@ -101,7 +101,7 @@ function callPythonToTransferTransaction(assetId, acceptor_pub_key, originator_p
   var result;
   var options = {
   mode: 'text',
-  pythonPath: '/usr/bin/python',
+  pythonPath: '/usr/bin/python3',
   pythonOptions: ['-u'], // get print results in real-time
   scriptPath: '__dirname/../scripts/',
   args: [assetId, acceptor_pub_key, originator_priv_key]
