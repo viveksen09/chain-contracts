@@ -12,6 +12,7 @@ var status = require('./routes/status');
 var create = require('./routes/create');
 var read = require('./routes/read');
 var auth = require('./routes/authentication');
+var admin = require('./routes/admin');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use('/status', status);
 app.use('/create', create);
 app.use('/read', read);
 app.use('/auth', auth);
+app.use('/admin', admin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
