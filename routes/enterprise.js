@@ -3,6 +3,8 @@ var driver = require('bigchaindb-driver');
 var mongoose = require('mongoose');
 var router = express.Router();
 
+const API_PATH = 'http://localhost:9984/api/v1/';
+const conn = new driver.Connection(API_PATH);
 const common = require('../common/common.js');
 var createdContracts = require('../schema/createdcontracts.js');
 
