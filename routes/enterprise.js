@@ -51,9 +51,8 @@ router.post('/contract/accept', function(req, res, next) {
   const acc_keys = common.getDemoKeys(accepteduser);
   const org_keys = common.getDemoKeys(originaluser);
   const txCreateEnterpriseSimpleSigned = conn.getTransaction(assetId);
-  const txTransferSupplier = driver.Transaction.makeTransferTransaction(
-        // signedTx to transfer and output index
-        [{ tx: txCreateEnterpriseSimpleSigned, output_index: 15 }],
+  console.log(txCreateEnterpriseSimpleSigned);
+  const txTransferSupplier = driver.Transaction.makeTransferTransaction([{ tx: txCreateEnterpriseSimpleSigned, output_index: '0'}],
         [driver.Transaction.makeOutput(driver.Transaction.makeEd25519Condition(acc_keys.pub_key))],
         metadata
       );
